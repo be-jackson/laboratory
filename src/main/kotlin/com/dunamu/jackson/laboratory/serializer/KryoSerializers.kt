@@ -28,6 +28,7 @@ class KryoSerializer {
 
     private val pool = object : Pool<Kryo>(true, false, 8) {
         override fun create(): Kryo = Kryo().apply {
+            classLoader = Thread.currentThread().contextClassLoader
             isRegistrationRequired = false
             (instantiatorStrategy as DefaultInstantiatorStrategy).fallbackInstantiatorStrategy = StdInstantiatorStrategy()
             setDefaultSerializer(SerializerFactory.CompatibleFieldSerializerFactory())
