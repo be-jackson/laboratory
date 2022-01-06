@@ -1,16 +1,12 @@
 package com.dunamu.jackson.laboratory.configures
 
+import com.dunamu.jackson.laboratory.serializer.KryoRedisSerializer
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.annotation.JsonTypeInfo
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.kotlinModule
 import net.sf.log4jdbc.Log4jdbcProxyDataSource
 import org.springframework.beans.factory.config.BeanPostProcessor
@@ -21,7 +17,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.data.redis.cache.RedisCacheConfiguration
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
 import org.springframework.data.redis.serializer.StringRedisSerializer
 import org.springframework.stereotype.Component
@@ -57,7 +52,8 @@ class DefaultConfiguration {
         )
         .serializeValuesWith(
             RedisSerializationContext.SerializationPair.fromSerializer(
-                GenericJackson2JsonRedisSerializer(
+                KryoRedisSerializer()
+                /*GenericJackson2JsonRedisSerializer(
                     jacksonObjectMapper().apply {
                         configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                         configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
@@ -65,7 +61,7 @@ class DefaultConfiguration {
                         activateDefaultTyping(polymorphicTypeValidator, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
                         registerModules(JavaTimeModule())
                     }
-                )
+                )*/
             )
         )
 
