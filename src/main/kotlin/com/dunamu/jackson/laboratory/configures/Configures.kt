@@ -13,7 +13,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.kotlinModule
 import net.sf.log4jdbc.Log4jdbcProxyDataSource
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer
@@ -22,7 +21,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.data.redis.cache.RedisCacheConfiguration
-import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
 import org.springframework.data.redis.serializer.StringRedisSerializer
@@ -49,9 +47,6 @@ class DataSourcePostProcessor : BeanPostProcessor {
 @EntityScan(basePackages = ["com.dunamu.jackson"])
 @EnableJpaRepositories(basePackages = ["com.dunamu.jackson"])
 class DefaultConfiguration {
-
-    @Autowired
-    lateinit var redisConnectionFactory: RedisConnectionFactory
 
     @Bean
     fun cacheConfiguration(): RedisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
