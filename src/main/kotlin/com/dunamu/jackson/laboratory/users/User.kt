@@ -17,7 +17,7 @@ data class User(
     var username: String,
 
     @Column(name = "github_url")
-    var gitHubUrl: String,
+    var gitHubUrl: String?,
 
     @Column(name = "created_at")
     var createdAt: LocalDateTime
