@@ -1,0 +1,4 @@
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    password: vRA3AY4apMyOfJ8EtJVX
