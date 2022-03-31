@@ -5,6 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.jasypt.encryption.StringEncryptor
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer
 import org.springframework.test.context.ContextConfiguration
@@ -18,12 +19,17 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 )
 @TestPropertySource(locations = ["/application-test.yml"])
 class JasyptStringEncryptorTest {
+    private val log = LoggerFactory.getLogger(javaClass)
+
     @Autowired
     lateinit var stringEncryptor: StringEncryptor
 
     @Test
-    fun `Jasypt 복호화 테스트`() {
-        assertThat(stringEncryptor.decrypt("cyV4/A0BGtQWv6Ph04OQqw==")).isEqualTo("dive")
-        assertThat(stringEncryptor.decrypt("F0KnW6r3V3rxdJWkIY9TjzC2yUdfo4hr")).isEqualTo("divedev123")
+    fun `Jasypt 암복호화 테스트`() {
+        val plainText = "jackson.lee"
+        val encryptText = stringEncryptor.encrypt(plainText)
+        val decryptText = stringEncryptor.decrypt(encryptText)
+        assertThat(decryptText).isEqualTo(plainText)
+        log.info("EncryptText = $encryptText")
     }
 }
