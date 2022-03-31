@@ -31,5 +31,9 @@ spring:
       schema-locations: classpath:sql/schema.sql
       data-locations: classpath:sql/data.sql
       encoding: UTF-8
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    password: vRA3AY4apMyOfJ8EtJVX
 server:
   port: 8888
